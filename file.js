@@ -3,7 +3,13 @@ function pow (a, b) {
     for (let i = 0; i < b; i++) {
         result *= a;
     }
-    return result; //але це при умові що b - ціле невід'ємне, бо тоді не вийде( треба буде, щось доадтково писати)
+    if (b < 0) {
+        for (let i = 0; i < -b; i++) {
+            result /= a;
+        }   
+    }
+    return result; 
 }
 
-//console.log(pow(3, 3));
+console.log(pow(30, -1));
+console.log(pow(3, 3));
