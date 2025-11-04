@@ -1,15 +1,25 @@
-function pow (a, b) {
-    let result  = 1;
-    for (let i = 0; i < b; i++) {
-        result *= a;
+function checkProbabilityTheory(count) {
+  
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  let parni = 0; 
+  let neParni = 0;  
+
+ 
+  for (let i = 0; i < count; i++) {
+    let int = getRandomInt(100, 1000);
+    if (int % 2 === 0) {
+      parni++;
+    } else {
+      neParni++;
     }
-    if (b < 0) {
-        for (let i = 0; i < -b; i++) {
-            result /= a;
-        }   
-    }
-    return result; 
+  }
+
+  let evenParni = (parni / count) * 100;
+
+  return `Мі передали ${count} чисел. Парних - ${parni}, непарних - ${neParni}. Відсоток парних до непарних - ${evenParni}`
 }
 
-console.log(pow(30, -1));
-console.log(pow(3, 3));
+console.log(checkProbabilityTheory(101))
