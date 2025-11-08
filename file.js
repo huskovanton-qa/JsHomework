@@ -1,25 +1,57 @@
-function checkProbabilityTheory(count) {
-  
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+let services = {
+  "стрижка": 60,
+  "гоління": 80,
+  "Миття голови": 100,
 
-  let parni = 0; 
-  let neParni = 0;  
+  set addService(data) {
+    let [name, price] = data;
+    services[name] = price; 
+  },
 
- 
-  for (let i = 0; i < count; i++) {
-    let int = getRandomInt(100, 1000);
-    if (int % 2 === 0) {
-      parni++;
-    } else {
-      neParni++;
+ get price() {
+    let total = 0;
+    for (let key in services) {
+        total += services[key];
+      }
+    return total;
+  },
+
+   get minPrice() {
+    let min = Infinity;
+    for (let key in services) {
+      const v = services[key];
+      if (v < min) {
+        min = v;
+      }
     }
+    return min;
+  },
+
+  get maxPrice() {
+    let max = -Infinity;
+    for (let key in services) {
+      const v = services[key];
+      if (v > max) {
+        max = v;
+      }
+    }
+    return max;
   }
+};
 
-  let evenParni = (parni / count) * 100;
+//підлегдів цей шматок кода в gpt, бо через гетер price(), коли в мене цикл доходив до нього,
+//він знову викликав гетер price() і так далі, в результаті чого виникала помилка переповнення стека викликів.
+Object.defineProperties(services, {
+  price:     { enumerable: false },
+  minPrice:  { enumerable: false },
+  maxPrice:  { enumerable: false },
+  addService:{ enumerable: false }
+});
 
-  return `Мі передали ${count} чисел. Парних - ${parni}, непарних - ${neParni}. Відсоток парних до непарних - ${evenParni}`
-}
 
-console.log(checkProbabilityTheory(101))
+services.addService = ["Розбити скло", 101];
+services.addService = ["Брови", 1];
+
+console.log(services.price);      
+console.log(services.minPrice); 
+console.log(services.maxPrice); 
